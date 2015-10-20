@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>无标题文档</title>
+    <script src="js/angular.min.js"></script>
+    <script>
+        function testController($scope,$timeout){
+            $scope.iphone = {
+                money: 5000,
+                num: 1,
+                fre: 10
+            };
+            $scope.sum = function(){
+                return $scope.iphone.money * $scope.iphone.num;
+            };
+//            $scope.$watch('iphone.money',function(newVal,oldVal){
+//                console.log(newVal);
+//            },true);
+            $scope.$watch($scope.sum,function(newVal,oldVal){
+                $scope.iphone.fre = newVal >= 10000 ? 0 : 10;
+            },true);
+        }
+    </script>
+</head>
+<body ng-app>
+<div ng-controller="testController" ng-click="show()">
+    <p>价格：<input type="text" ng-model="iphone.money" /></p>
+    <p>数量：<input type="text" ng-model="iphone.num" /></p>
+    <p>合计：<span>{{ sum() | currency:'￥' }}</span></p>
+    <p>运费：<span>{{ iphone.fre | currency:'￥' }}</span></p>
+    <p>总额：<span>{{ sum() + iphone.fre | currency:'￥' }}</span></p>
+</div>
+</body>
+</html>
